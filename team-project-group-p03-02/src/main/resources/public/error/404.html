@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found</title>
+    <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+        }
+        .error-container {
+            max-width: 600px;
+            text-align: center;
+        }
+        .error-title {
+            font-size: 5rem;
+            font-weight: 700;
+            color: #ffc107;
+        }
+        .error-subtitle {
+            font-size: 2rem;
+            font-weight: 500;
+            color: #6c757d;
+        }
+        .error-message {
+            margin-top: 1rem;
+            color: #495057;
+        }
+        .btn-home {
+            margin-top: 2rem;
+            padding: 0.8rem 2rem;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+<div class="error-container">
+    <h1 class="error-title">404</h1>
+    <h2 class="error-subtitle">Page Not Found</h2>
+    <p class="error-message">
+        Sorry, the page you are looking for does not exist or may have been moved.
+    </p>
+    <a class="btn btn-primary btn-home" href="/" role="button">Go to Homepage</a>
+</div>
+</body>
+</html>

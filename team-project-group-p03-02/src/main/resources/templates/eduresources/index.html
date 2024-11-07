@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+
+<head>
+    <title>Educational Resources and Latest Trends in Pet Care</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        .card {
+            border-radius: 10px; 
+            transition: transform 0.2s, box-shadow 0.2s; 
+        }
+
+        .card:hover {
+            transform: translateY(-5px); 
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold; 
+            color: #333; 
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+            color: #666; 
+            line-height: 1.5;
+        }
+
+        .btn-secondary {
+            border-radius: 5px; 
+            transition: background-color 0.3s; 
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268; 
+        }
+
+        .btn-outline-secondary {
+            border-color: #6c757d; 
+            color: #6c757d; 
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #6c757d; 
+            color: white; 
+        }
+
+        .hr-divider {
+            border-top: 1px solid #ccc;
+            margin: 80px 0 0; 
+        }
+
+        .hr-divider-top {
+            border-top: 1px solid #ccc;
+            margin: 10px 0 0;
+        }
+
+        input[type="text"] {
+            border: 1px solid #ced4da;
+            border-radius: 5px; 
+            padding: 10px;
+            width: 100%; 
+            max-width: 200px; 
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-5" layout:fragment="content">
+        
+        <!--Navbar-->
+        <div class="row align-items-center mt-4">
+            <div class="col-md-6">
+                <h1>Educational Resources</h1>
+            </div>
+            <div class="col-md-3 text-end">
+                <a href="/account/savededuresources" class="btn btn-secondary">Your saved resources</a>
+            </div>
+            <div class="col-md-3 text-end">
+                <form th:action="@{/eduresources/search}" class="d-flex">
+                    <input type="text" placeholder="Search.." name="searchResult" class="form-control me-2">
+                    <button type="submit" class="btn btn-secondary"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+
+        <div class="hr-divider-top"></div>
+
+        <div th:if="${message}" class="alert alert-success">
+            <p th:text="${message}"></p>
+        </div>
+
+        <!--Guides, Articles, Videos-->
+        <section>
+
+            <!--Videos-->
+            <div class="mt-4 row">
+                <h3>Videos</h3>
+                <div class="col-4" th:each="video : ${videos}">
+                    <div class="card h-100">
+
+                        <iframe th:src="${video.content}" frameborder="0" allowfullscreen></iframe>
+
+                        <div class="card-body d-flex flex-column" style="height: 100%;">
+                            <h5 class="card-title" th:text="${video.title}"></h5>
+                            <p class="card-text flex-fill" th:text="${video.description}"></p>
+
+                            <!--Buttons-->
+                            <div class="d-flex justify-content-between mt-auto">
+                                <a th:href="${video.content}" class="btn btn-secondary" style="flex: 1; margin-right: 10px;" target="_blank">View video</a>
+                                <form th:unless="${#lists.isEmpty(video)}" th:action="@{/eduresources/save_resource}" method="post" style="flex: 0 0 auto;">
+                                    <input type="hidden" name="resourceID" th:value="${video.resourceID}"> 
+                                    <button class="btn btn-outline-secondary" type="submit">   
+                                        <span class="bi bi-bookmark"></span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hr-divider"></div>
+
+            <!--Articles-->
+            <div class="mt-4 row">
+                <h3>Articles</h3>
+                <div class="col-4" th:each="article : ${articles}">
+                    <div class="card h-150">
+                        <div class="card-body d-flex flex-column" style="height: 300px;">
+                            <h5 class="card-title" style="flex: 0 1 auto;" th:text="${article.title}"></h5>
+                            <p class="card-text flex-fill" style="overflow: hidden; text-overflow: ellipsis;" th:text="${article.description}"></p>
+
+                            <!--Buttons-->
+                            <div class="d-flex justify-content-between mt-auto">
+                                <a th:href="${article.content}" class="btn btn-secondary" style="flex: 1; margin-right: 10px;" target="_blank">View full article</a>
+                                <form th:unless="${#lists.isEmpty(article)}" th:action="@{/eduresources/save_resource}" method="post" style="flex: 0 0 auto;">
+                                    <input type="hidden" name="resourceID" th:value="${article.resourceID}"> 
+                                    <button class="btn btn-outline-secondary" type="submit">   
+                                        <span class="bi bi-bookmark"></span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hr-divider"></div>
+
+            <!--Guides-->
+
+            <div class="mt-4 row">
+                <h3>Guides</h3>
+                <div class="col-4" th:each="guide : ${guides}">
+                    <div class="card h-150">
+                        <div class="card-body d-flex flex-column" style="height: 300px;">
+                            <h5 class="card-title" style="flex: 0 1 auto;" th:text="${guide.title}"></h5>
+                            <p class="card-text flex-fill" style="overflow: hidden; text-overflow: ellipsis;" th:text="${guide.description}"></p>
+
+                            <!--Buttons-->
+                            <div class="d-flex justify-content-between mt-auto">
+                                <a th:href="${guide.content}" class="btn btn-secondary" style="flex: 1; margin-right: 10px;" target="_blank">View full guide</a>
+                                <form th:unless="${#lists.isEmpty(guide)}" th:action="@{/eduresources/save_resource}" method="post" style="flex: 0 0 auto;">
+                                    <input type="hidden" name="resourceID" th:value="${guide.resourceID}"> 
+                                    <button class="btn btn-outline-secondary" type="submit">   
+                                        <span class="bi bi-bookmark"></span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hr-divider"></div>
+
+        </section>
+
+        <!--Trends-->
+        <section>
+            <div class="mt-4 row">
+                <h3>Latest Trends and Resources</h3>
+                <p>No Trends Found</p>
+                <!-- Handling of displaying latest trends and edu-resources goes here -->
+            </div>
+        </section>
+
+    </div>
+</body>
+
+</html>

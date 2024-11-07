@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register a New Pet - VetCare</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .form-control {
+            max-width: 250px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div layout:fragment="content" class="container mt-5">
+
+    <h1>Register a New Pet</h1>
+
+    <form th:action="@{/pets/new}" method="post">
+        <!-- Pet Name -->
+        <div class="mb-3">
+            <label for="petName" class="form-label"><b>Pet Name</b></label>
+            <input type="text" class="form-control" id="petName" name="name" placeholder="Enter pet's name"
+                required pattern="^\S+(?:\s+\S+)*$" 
+                title="Please enter a valid pet name without leading or trailing spaces.">
+        </div>
+
+        <!-- Species -->
+        <div class="mb-3">
+            <label for="species" class="form-label"><b>Species</b></label>
+            <input type="text" class="form-control" id="species" name="species" placeholder="Enter pet's species"
+                required pattern="^\S+(?:\s+\S+)*$" 
+                title="Please enter a valid breed without leading or trailing spaces.">
+        </div>
+
+        <!-- Breed -->
+        <div class="mb-3">
+            <label for="breed" class="form-label"><b>Breed</b></label>
+            <input type="text" class="form-control" id="breed" name="breed" placeholder="Enter pet's breed"
+                required pattern="^\S+(?:\s+\S+)*$" 
+                title="Breed cannot be blank or whitespace only">
+        </div>
+
+
+        <!-- Age -->
+        <div class="mb-3">
+            <label for="age" class="form-label"><b>Age</b></label>
+            <input type="number" class="form-control" id="age" name="age" placeholder="Enter pet's age" min="0" max="200" required>
+        </div>
+
+        <!-- Submit and Cancel Buttons -->
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Confirm</button>
+            <a href="/pets" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Booking - VetCare</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .readonly-field {
+            background-color: #f8f9fa;
+            border: 1px solid #ced4da;
+            color: #6c757d;
+        }
+
+        .readonly-label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            max-width: 250px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div layout:fragment="content" class="container mt-5">
+
+    <h1>Appointment Booking</h1>
+
+    <!-- If no pets exist, show a message and disable the form -->
+    <div th:if="${#lists.isEmpty(pets)}">
+        <div class="alert alert-warning" role="alert">
+            <p th:text="${noPetsMessage}">You have no registered pets. Please register a pet before booking an appointment.</p>
+            <a href="/pets/new" class="btn btn-primary">Register a Pet</a>
+        </div>
+    </div>
+
+    <!-- If pets exist, show the booking form -->
+    <form th:unless="${#lists.isEmpty(pets)}" th:action="@{/appointments/book_appointment}" method="post" th:object="${appointment}">
+        <input type="hidden" th:field="*{appointmentID}" />
+
+        <!-- Date Input -->
+        <div class="mb-3">
+            <label for="bookingDate" class="form-label readonly-label">Select a date</label>
+            <input type="date" id="bookingDate" class="form-control" th:field="*{appointmentDate}" required />
+        </div>
+
+        <!-- Time Input -->
+        <div class="mb-3">
+            <label for="bookingTime" class="form-label readonly-label">Select a time</label>
+            <input type="time" id="bookingTime" class="form-control" th:field="*{appointmentTime}" required min="08:00" max="19:00" />
+        </div>
+
+        <!-- Pet Selection -->
+        <div class="mb-3">
+            <label for="petId" class="form-label readonly-label">Which pet are you booking?</label>
+            <select id="petId" class="form-control" th:field="*{petId}" required>
+                <option value="" disabled selected>Choose a pet</option>
+                <option th:each="pet : ${pets}" th:value="${pet.petId}" th:text="${pet.name}"></option>
+            </select>
+        </div>
+
+        <!-- Appointment Type -->
+        <div class="mb-3">
+            <label for="AppointmentType" class="form-label readonly-label">What type of appointment are you scheduling?</label>
+            <select id="AppointmentType" class="form-control" th:field="*{generalNotes}" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="Routine check-up">Routine check-up</option>
+                <option value="Health check">Health check</option>
+                <option value="Follow-up visit">Follow-up visit</option>
+                <option value="Behavioural consultation">Behavioural consultation</option>
+                <option value="Medication Review">Medication Review</option>
+                <option value="Ear infection treatment">Ear infection treatment</option>
+                <option value="Teeth cleaning">Teeth cleaning</option>
+            </select>
+        </div>
+
+        <!-- Submit and Cancel Buttons -->
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">Confirm</button>
+            <a href="/appointments" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

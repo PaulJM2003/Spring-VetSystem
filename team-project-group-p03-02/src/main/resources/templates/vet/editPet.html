@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Pet</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Edit Pet Information</h2>
+
+    <form th:action="@{/vet/owners/{userId}/pets/{petId}/save(userId=${userId}, petId=${pet.petId})}" th:object="${pet}" method="post">
+        
+        <!-- Pet General Information -->
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Enter pet's name">
+        </div>
+        <div class="form-group">
+            <label for="species">Species</label>
+            <input type="text" id="species" th:field="*{species}" class="form-control" placeholder="Enter pet's species">
+        </div>
+        <div class="form-group">
+            <label for="breed">Breed</label>
+            <input type="text" id="breed" th:field="*{breed}" class="form-control" placeholder="Enter pet's breed">
+        </div>
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="age" th:field="*{age}" class="form-control" placeholder="Enter pet's age">
+        </div>
+
+        <!-- Medical History -->
+        <h3>Medical History</h3>
+        <div class="form-group">
+            <label for="chronicConditions">Chronic Conditions</label>
+            <input type="text" id="chronicConditions" th:field="*{medicalHistory.chronicConditions}" class="form-control" placeholder="Enter chronic conditions">
+        </div>
+        <div class="form-group">
+            <label for="allergies">Allergies</label>
+            <input type="text" id="allergies" th:field="*{medicalHistory.allergies}" class="form-control" placeholder="Enter allergies">
+        </div>
+        <div class="form-group">
+            <label for="notes">Notes</label>
+            <textarea id="notes" th:field="*{medicalHistory.notes}" class="form-control" placeholder="Enter medical notes"></textarea>
+        </div>
+
+        <!-- Vaccination Records -->
+        <h3>Vaccination Records</h3>
+        <div th:each="vaccination, iterStat : *{vaccinations}">
+            <div class="form-group">
+                <label for="vaccineName">Vaccination #<span th:text="${iterStat.index + 1}">1</span> - Vaccine Name</label>
+                <input type="text" id="vaccineName" th:field="*{vaccinations[__${iterStat.index}__].vaccineName}" class="form-control" placeholder="Enter vaccine name">
+            </div>
+            <div class="form-group">
+                <label for="dateAdministered">Date Administered</label>
+                <input type="date" id="dateAdministered" th:field="*{vaccinations[__${iterStat.index}__].dateAdministered}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="nextDueDate">Next Due Date</label>
+                <input type="date" id="nextDueDate" th:field="*{vaccinations[__${iterStat.index}__].nextDueDate}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <input type="text" id="status" th:field="*{vaccinations[__${iterStat.index}__].status}" class="form-control" placeholder="Enter status (e.g., Completed, Due)">
+            </div>
+            <div class="form-group">
+                <label for="notes">Notes</label>
+                <textarea id="notes" th:field="*{vaccinations[__${iterStat.index}__].notes}" class="form-control" placeholder="Enter any notes"></textarea>
+            </div>
+        </div>
+
+        <!-- Treatment Plans -->
+        <h3>Treatment Plans</h3>
+        <div th:each="treatmentPlan, iterStat : *{treatmentPlans}">
+            <div class="form-group">
+                <label for="description">Treatment Plan #<span th:text="${iterStat.index + 1}">1</span> - Description</label>
+                <input type="text" id="description" th:field="*{treatmentPlans[__${iterStat.index}__].description}" class="form-control" placeholder="Enter treatment description">
+            </div>
+            <div class="form-group">
+                <label for="endDate">End Date</label>
+                <input type="date" id="endDate" th:field="*{treatmentPlans[__${iterStat.index}__].endDate}" class="form-control">
+            </div>
+        </div>
+
+        <!-- Prescriptions -->
+        <h3>Prescriptions</h3>
+        <div th:each="prescription, iterStat : *{prescriptions}">
+            <div class="form-group">
+                <label for="medication">Prescription #<span th:text="${iterStat.index + 1}">1</span> - Medication</label>
+                <input type="text" id="medication" th:field="*{prescriptions[__${iterStat.index}__].medicine.name}" class="form-control" placeholder="Enter medication">
+            </div>
+            <div class="form-group">
+                <label for="dosageQuantity">Dosage</label>
+                <input type="text" id="dosageQuantity" th:field="*{prescriptions[__${iterStat.index}__].dosageQuantity}" class="form-control" placeholder="Enter dosage">
+            </div>
+            <div class="form-group">
+                <label for="expiryDate">End Date</label>
+                <input type="date" id="expiryDate" th:field="*{prescriptions[__${iterStat.index}__].expiryDate}" class="form-control">
+            </div>
+        </div>
+
+        <!-- Save Button -->
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+
+    <!-- Back Button -->
+    <a th:href="@{/vet/owners/{userId}/pets(userId=${userId})}" class="btn btn-secondary mt-3">Back to Pet List</a>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

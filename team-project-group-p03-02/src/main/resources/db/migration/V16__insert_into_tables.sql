@@ -1,0 +1,2 @@
+INSERT INTO prescription (prescription_id, pet_id, vet_id, medicine_id, instructions, dosage_quantity, date_administered, expiry_date, repeats_left, renewal_date) VALUES
+(3, 6, 1, 1, 'testInstuctionsExpired', 'testdosage', '2024-10-2', '2024-1-1', 5, '2024-10-10');

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Medical Records</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <h1 class="my-4">Medical Records for <span th:text="${pet.name}">[Pet Name]</span></h1>
+
+        <!-- If pet isn't found for some reason -->
+        <div th:if="${errorMessage != null}" class="alert alert-danger">
+            <p th:text="${errorMessage}">Pet not found.</p>
+        </div>
+
+        <!-- Vaccination record table -->
+        <div class="mb-4">
+            <h2>Vaccination History</h2>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Vaccine Name</th>
+                        <th>Date Administered</th>
+                        <th>Next Due Date</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Message if no vaccination records are found -->
+                    <tr th:if="${noVaccinationsMessage != null}">
+                        <td colspan="5" class="text-center" th:text="${noVaccinationsMessage}">No vaccination records found.</td>
+                    </tr>
+                    <!-- Vaccination records -->
+                    <tr th:each="vaccine : ${vaccinations}">
+                        <td th:text="${vaccine.vaccineName}">[Vaccine Name]</td>
+                        <td th:text="${vaccine.dateAdministered}">[Date Administered]</td>
+                        <td th:text="${vaccine.nextDueDate}">[Next Due Date]</td>
+                        <td th:text="${vaccine.status}">[Status]</td>
+                        <td th:text="${vaccine.notes}">[Notes]</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Treatment plan table -->
+        <div class="mb-4">
+            <h2>Treatment Plans</h2>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Diagnosis</th>
+                        <th>Description</th>
+                        <th>Date Administered</th>
+                        <th>End Date</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Message if no treatment plans are found -->
+                    <tr th:if="${noTreatmentPlansMessage != null}">
+                        <td colspan="5" class="text-center" th:text="${noTreatmentPlansMessage}">No treatment plans found.</td>
+                    </tr>
+                    <!-- Treatment plans -->
+                    <tr th:each="treatment : ${treatmentPlans}">
+                        <td th:text="${treatment.diagnosis}">[Diagnosis]</td>
+                        <td th:text="${treatment.description}">[Description]</td>
+                        <td th:text="${treatment.dateAdministered}">[Date Administered]</td>
+                        <td th:text="${treatment.endDate}">[End Date]</td>
+                        <td th:text="${treatment.notes}">[Notes]</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Prescription history table -->
+        <div class="mb-4">
+            <h2>Prescription History</h2>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Medicine Name</th>
+                        <th>Dosage Quantity</th>
+                        <th>Instructions</th>
+                        <th>Date Administered</th>
+                        <th>Expiry Date</th>
+                        <th>Repeats Left</th>
+                        <th>Renewal Date</th>
+                        <th>Request Prescription</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Message if no prescriptions are found -->
+                    <tr th:if="${noPrescriptionsMessage != null}">
+                        <td colspan="7" class="text-center" th:text="${noPrescriptionsMessage}">No prescriptions found.</td>
+                    </tr>
+                    <!-- Prescription records -->
+                    <tr th:each="prescription : ${prescriptions}">
+                        <td>
+                            <a th:href="@{/pets/{petId}/medicine/{medicineId}/dosages(petId=${pet.petId}, medicineId=${prescription.medicine.medicineID})}"
+                               th:text="${prescription.medicine.name}">[Medicine Name]</a>
+                        </td>
+                        <td th:text="${prescription.dosageQuantity}">[Dosage Quantity]</td>
+                        <td>
+                            <a th:href="@{/pets/{petId}/medicine/{medicineId}/dosages(petId=${pet.petId}, medicineId=${prescription.medicine.medicineID})}"
+                               th:text="${prescription.instructions != null ? 'View' : ''}" class="btn btn-info btn-sm" role="button">View</a>
+                        </td>
+                        <td th:text="${prescription.dateAdministered}">[Date Administered]</td>
+                        <td th:text="${prescription.expiryDate}">[Expiry Date]</td>
+                        <td th:text="${prescription.repeatsLeft}">[Repeats Left]</td>
+                        <td th:text="${prescription.renewalDate}">[Renewal Date]</td>
+                        <td>
+                            <!-- Request prescription refills -->
+                            
+                            <form th:action="@{/pets/{petId}/refill/{prescriptionID}(petId=${pet.petId}, prescriptionID=${prescription.prescriptionID})}" method="post" style="display:inline;">
+                                <span th:if="${prescription.repeatsLeft > 0}">
+                                    <button type="submit" class="btn btn-primary btn-sm">Request</button>
+                                </span>
+                                <span th:if="${prescription.repeatsLeft <= 0}">
+                                    <p>No more prescriptions available</p>
+                                </span>
+                            </form>
+                        </td>
+                    </tr>
+                    <div th:if="${successMessage}" class="alert alert-success">
+                        <p th:text="${successMessage}"></p>
+                    </div>
+                    <div th:if="${failMessage}" class="alert alert-danger">
+                        <p th:text="${failMessage}"></p>
+                    </div>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Download Button -->
+        <a th:href="@{/pets/{petId}/download(petId=${pet.petId})}" class="btn btn-success">Download Records as PDF</a>
+
+        <!-- Sharing Feature (Frontend) -->
+        <div class="mt-4">
+            <h3>Share Health Records</h3>
+            <form th:action="@{/pets/{petId}/share(petId=${pet.petId})}" method="post">
+                <div class="form-group">
+                    <label for="email">Enter Email Address:</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter recipient email" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Share Records</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+

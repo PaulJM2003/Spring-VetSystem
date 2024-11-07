@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vet Home Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+<div layout:fragment="content">
+    <h2 class="mb-4">Registered Pet Owners</h2>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${owners}">
+                <td th:text="${user.userID}">User ID</td> <!-- Correct to user.userID -->
+                <td th:text="${user.name}">User Name</td>
+                <td th:text="${user.email}">User Email</td>
+                <td>
+                    <a th:href="@{/vet/owners/{userID}/pets(userID=${user.userID})}" class="btn btn-primary">View Pets</a> <!-- Correct to user.userID -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Back Button or Home Button -->
+    <a th:href="@{/vet/home}" class="btn btn-secondary mt-3">Back to Home</a>
+</div>
+</body>
+</html>

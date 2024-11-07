@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+
+<head>
+    <title>Saved Educational Resources</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+
+
+    <style>
+        .card {
+            border-radius: 10px; 
+            transition: transform 0.2s, box-shadow 0.2s; 
+        }
+
+        .card:hover {
+            transform: translateY(-5px); 
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold; 
+            color: #333; 
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+            color: #666; 
+            line-height: 1.5;
+        }
+
+        .btn-secondary {
+            border-radius: 5px; 
+            transition: background-color 0.3s; 
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268; 
+        }
+
+        .btn-outline-secondary {
+            border-color: #6c757d; 
+            color: #6c757d; 
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #6c757d; 
+            color: white; 
+        }
+
+        .hr-divider {
+            border-top: 1px solid #ccc;
+            margin: 80px 0 0; 
+        }
+
+        .hr-divider-top {
+            border-top: 1px solid #ccc;
+            margin: 10px 0 0;
+        }
+
+        input[type="text"] {
+            border: 1px solid #ced4da;
+            border-radius: 5px; 
+            padding: 10px;
+            width: 100%; 
+            max-width: 200px; 
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+    <div class="container mt-5" layout:fragment="content">
+
+         <!--Navbar-->
+         <div class="row align-items-center mt-4">
+            <div class="col-md-6">
+                <h1>Search results</h1>
+            </div>
+            <div class="col-md-3 text-end">
+                <form th:action="@{/eduresources/search}" class="d-flex">
+                    <input type="text" placeholder="Search.." name="searchResult" class="form-control me-2">
+                    <button type="submit" class="btn btn-secondary"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+
+        <div class="hr-divider-top"></div>
+
+        <section>
+
+            <!-- No search result -->
+            <h3 th:if="${#lists.isEmpty(resources)}">No Results found for "<span th:text="${searchResult}"></span>"</h3>
+
+            <!-- Display resources found -->
+            <div th:unless="${#lists.isEmpty(resources)}">
+                <h3>All results for "<span th:text="${searchResult}"></span>"</h3>
+
+                <div th:each="resource : ${resources}">
+
+                    <div class="mt-4 row">
+                        <div class="col-6">
+                            <div class="card h-100">
+                                <iframe th:src="${resource.content}" frameborder="0" allowfullscreen></iframe>
+
+                                <div class="card-body d-flex flex-column" style="height: 100%;">
+                                    <h5 class="card-title" th:text="${resource.title}"></h5>
+                                    <p class="card-text flex-fill" th:text="${resource.description}"></p>
+
+                                    <!-- Buttons -->
+                                    <div class="d-flex justify-content-between mt-auto">
+                                        <a th:if="${resource.resourceType == 'Video'}" th:href="${resource.content}" class="btn btn-secondary" style="flex: 1; margin-right: 10px;" target="_blank">View video</a>
+                                        <a th:if="${resource.resourceType == 'Article'}" th:href="${resource.content}" class="btn btn-secondary" style="flex: 1; margin-right: 10px;" target="_blank">View Article</a>
+                                        <a th:if="${resource.resourceType == 'Guide'}" th:href="${resource.content}" class="btn btn-secondary" style="flex: 1; margin-right: 10px;" target="_blank">View Guide</a>
+
+                                        <form th:unless="${#lists.isEmpty(resource)}" th:action="@{/eduresources/save_resource}" method="post" style="flex: 0 0 auto;">
+                                            <input type="hidden" name="resourceID" th:value="${resource.resourceID}"> 
+                                            <button class="btn btn-outline-secondary" type="submit">   
+                                                <span class="bi bi-bookmark"></span> <!-- Bookmark icon -->
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Back to Resources Link -->
+        <p><a href="/eduresources" class="btn btn-secondary">Back to Resources</a></p>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VetCare - Your Pet's Health, Simplified</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .cta-section img, .cta-section i {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            margin: 0 auto -40px;
+        }
+
+        .cta-section h2 {
+            font-weight: bold;
+        }
+
+        .contact-info {
+            font-weight: bold;
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/40d695d113.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<div layout:fragment="content" class="container mt-5">
+
+    <header class="text-center mb-5">
+        <h1 class="fw-bold">VetCare</h1>
+        <h4 class="text-muted mb-4">Convenient Care for Your Pets</h4>
+        <div class="d-flex justify-content-center">
+            <div class="mx-3">
+                <h6 class="contact-info">Phone: +(03) 0000 0000</h6>
+            </div>
+            <div class="mx-3">
+                <h6 class="contact-info">Email: info@vetcare.com.au</h6>
+            </div>
+        </div>
+    </header>
+
+    <!-- cta -->
+    <main class="row cta-section justify-content-center text-center">
+        <div class="col-md-4 mb-4">
+            <i class="fa-solid fa-calendar-plus fa-5x"></i>
+            <h2>Book an Appointment</h2>
+            <p>Choose a convenient time for you and manage your bookings.</p>
+            <p><a class="btn btn-primary" href="/appointments/new">Book now</a></p>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <i class="fa-solid fa-paw fa-5x"></i>
+            <h2>Register a New Pet</h2>
+            <p>Manage your pet's information, medical history, and more.</p>
+            <p><a class="btn btn-primary" href="/pets/new">Register a Pet</a></p>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <i class="fa-solid fa-book fa-5x"></i>
+            <h2>Educational Resources</h2>
+            <p>See our comprehensive guides on how to properly care for your pets.</p>
+            <p><a class="btn btn-primary" href="/eduresources">View resources</a></p>
+        </div>
+        
+    </main>
+
+</div>
+</body>
+
+</html>

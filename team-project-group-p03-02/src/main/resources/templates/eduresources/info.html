@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+
+<head>
+    <title>Educational Resource</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+
+
+    <div layout:fragment="content">
+
+        <h1>Resource Title</h1>
+
+        <section>
+            <h2>Description</h2>
+            <p>This is the resource description</p>
+        </section>
+
+        <section>
+            <h2>Content</h2>
+            <p>This is the main content of the educational resource</p>
+        </section>
+
+        <!-- save resource action logic goes here -->
+        <button type="submit" class="btn btn-success">Save Resource</button>
+        
+        <p><a href="/eduresources" class="btn btn-secondary">Back to Resources</a></p>
+
+    </div>
+
+</body>
+
+</html>
