@@ -1,7 +1,7 @@
 # VetCare - Convenient Care For Your Pets :
 
 **video demonstrating the webapplication :** 
-https://rmiteduau-my.sharepoint.com/:v:/g/personal/s3968971_student_rmit_edu_au/EX2PlJx6Ht1Enzz7pcUo8isBtH63aZGMWdsOfDBTrpUzdA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=uQ0SNK
+[https://rmiteduau-my.sharepoint.com/:v:/g/personal/s3968971_student_rmit_edu_au/EX2PlJx6Ht1Enzz7pcUo8isBtH63aZGMWdsOfDBTrpUzdA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=uQ0SNK](https://rmiteduau-my.sharepoint.com/:v:/g/personal/s3968971_student_rmit_edu_au/EX2PlJx6Ht1Enzz7pcUo8isBtH63aZGMWdsOfDBTrpUzdA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=YTApjO)
 
 ***is a Spring Boot web application designed to simplify pet healthcare management. It allows pet owners to manage their pets' medical records, book appointments, request prescriptions, and access educational resources. The backend is built with Spring Boot and integrated with a MySQL database, while Docker is used to streamline deployment.***
 
